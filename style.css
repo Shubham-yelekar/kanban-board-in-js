@@ -251,18 +251,89 @@ p {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
+  width: 360px;
   padding: 1.6rem;
   background-color: var(--color-primary-a60);
-
+  border-radius: 16px;
   display: flex;
-  gap: 8px;
+  gap: 16px;
   flex-direction: column;
+  align-items: stretch;
+  text-align: center;
 }
 
-.overlay .form-box input {
+.overlay .form-box h4 {
+  font-weight: 400;
+  color: var(--color-primary-a10);
+}
+
+.overlay .form-box input,
+textarea {
   font-size: 1.6rem;
   padding: 0.8rem 1rem;
   border-radius: 0.8rem;
   border: none;
+  background-color: var(--color-primary-a40);
+  color: var(--color-primary-a0);
+  transition: all 0.3s ease-in-out;
+}
+
+.overlay .form-box input:focus {
+  outline: none;
+  /* inset: 2px solid var(--color-primary-a30); */
+  -webkit-box-shadow: inset 0px 0px 0px 1px var(--color-primary-a30);
+  -moz-box-shadow: inset 0px 0px 0px 1px var(--color-primary-a30);
+  box-shadow: inset 0px 0px 0px 1px var(--color-primary-a30);
+}
+
+.overlay .form-box .message-input {
+  height: 100px;
+  text-align: left;
+  vertical-align: top;
+  resize: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.input-boards p {
+  text-align: start;
+  color: var(--color-primary-a10);
+  margin-bottom: 4px;
+}
+
+.boards-select {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.button-group input[type="radio"] {
+  display: none;
+}
+
+.button-group label {
+  display: inline-block;
+  padding: 0.4rem 1.4rem;
+  cursor: pointer;
+  border: 1px solid var(--color-primary-a30);
+  background-color: var(--color-primary-a50);
+  color: white;
+  border-radius: 16px;
+  transition: all ease 0.2s;
+  text-align: center;
+  flex-grow: 1;
+  flex-basis: 0;
+  font-size: 12px;
+  box-shadow: 0px 0px 50px -15px #000000;
+}
+
+.button-group input[type="radio"]:checked + label {
+  background-color: white;
+  color: #02375a;
+  border: 1px solid #2b426d;
 }

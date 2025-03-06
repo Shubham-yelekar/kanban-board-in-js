@@ -48,22 +48,42 @@
       </button>
     </section>
 
-    <div class="overlay">
+    <div class="overlay active">
       <div id="" class="form-box">
-        <button class="btn close-btn">X</button>
-        <h2>New Task</h2>
+        <button class="btn close-btn">╳</button>
+        <h4>Add New Task</h4>
         <input
           id="task_name"
           name="task_name"
           type="text"
           placeholder="Task name"
         />
-        <input
+        <textarea
           id="task_des"
           name="task_description"
           type="message"
           placeholder="Description"
-        />
+          class="message-input"
+        ></textarea>
+        <div class="input-boards">
+          <p>Boards</p>
+          <div class="boards-select">
+            <!-- <div class="button-group">
+              <input type="radio" id="svelt" name="frameworks" checked="" />
+              <label for="svelt">Svelt</label>
+            </div>
+
+            <div class="button-group">
+              <input type="radio" id="react" name="frameworks" />
+              <label for="react">React</label>
+            </div>
+
+            <div class="button-group">
+              <input type="radio" id="vue" name="frameworks" />
+              <label for="vue">Vue</label>
+            </div> -->
+          </div>
+        </div>
         <button class="btn btn-primary" id="add_task_todo">Submit</button>
       </div>
     </div>
