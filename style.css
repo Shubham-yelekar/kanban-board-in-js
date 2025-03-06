@@ -35,6 +35,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: "Inter", sans-serif;
+  overflow: hidden;
 }
 /*
     5. Improve media defaults
@@ -145,6 +146,7 @@ p {
   gap: 2.4rem;
   padding: 1.6rem;
   height: 100%;
+  overflow-x: auto;
 }
 
 .board-box {
@@ -213,6 +215,8 @@ p {
   background-color: #141414;
   padding: 2rem;
   border-radius: 1rem;
+  position: relative;
+  transition: all 0.3s ease-in-out;
 }
 
 .task-card p {
@@ -232,18 +236,43 @@ p {
   color: var(--color-primary-a30);
 }
 
-.overlay {
+.task-options{
   display: none;
   position: absolute;
+  bottom: 0.2rem;
+  right: 0.2rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.task-card:hover .task-options{
+  display: block;
+}
+
+.task-options button {
+  all: unset;
+  font-size: 1.2rem;
+  padding: 0.8rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+.task-options button:hover {
+  background-color: var(--color-primary-a40);
+
+}
+
+.overlay {
+  position: fixed;
   height: 100vh;
   width: 100vw;
   background-color: #00000075;
   backdrop-filter: blur(5px);
   top: 0px;
+  left: 0;
+  display: none;
 }
 
 .overlay.active {
-  display: block;
+  display: flex;
 }
 
 .overlay .form-box {

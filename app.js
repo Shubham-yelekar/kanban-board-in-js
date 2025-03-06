@@ -32,11 +32,7 @@ let data = {
         },
       ],
     },
-    {
-      name: "Pending",
-      des: "Pending task",
-      tasks: [],
-    },
+   
   ],
 };
 renderBoard();
@@ -59,7 +55,7 @@ function renderBoard() {
           </div>
           <div class="board-task-cards">
           </div>
-          <button class="btn btn-task">+ Add new task</button>`;
+          <button onclick="showOverlay()"  class="btn btn-task">+ Add new task</button>`;
     boardDiv.innerHTML = boardEl;
     boardsBox.appendChild(boardDiv);
     renderTasks(board, boardDiv);
@@ -68,8 +64,9 @@ function renderBoard() {
 
 function renderTasks(board, boardDiv) {
   const taskCardsBox = boardDiv.querySelector(".board-task-cards");
-  board.tasks.forEach((task) => {
+  board.tasks.forEach((task , index) => {
     const newTask = document.createElement("div");
+    newTask.setAttribute("id", index )
     newTask.classList.add("task-card");
     newTask.setAttribute("draggable", "true");
     newTask.innerHTML = `
@@ -77,17 +74,26 @@ function renderTasks(board, boardDiv) {
         <h4>${task.name}</h4>
         <span>${task.time}</span>
     </div>
-    <p>${task.des}</p>`;
+    <p>${task.des}</p>
+    <div class="task-options">
+    <button class="edit-task" data-board = ${board.name} data-index = ${index}>🖊️</button>
+    <button class="delete-task" data-board = ${board.name} data-index = ${index}>🗑️</button>
+    </div>
+    `;
     taskCardsBox.appendChild(newTask);
   });
 }
 
+
 add_task.addEventListener("click", () => {
   const taskName = document.getElementById("task_name");
   const taskDes = document.getElementById("task_des");
-  const board = document.querySelector("input[name='board']:checked")?.value;
-
-  createTask(taskName.value.trim(), taskDes.value.trim());
+  const board = document.querySelector("input[name='board']:checked");
+  let boardName
+  if(document.querySelector("input[name='board']:checked")){
+    boardName = board.id 
+  }
+  createTask(taskName.value.trim(), taskDes.value.trim(), boardName);
   showOverlay();
   taskName.value = "";
   taskDes.value = "";
@@ -101,6 +107,7 @@ modalClose.forEach((element) => {
 
 function updateRadioBtns() {
   const boardsRadioBtnWrapper = document.querySelector(".boards-select");
+  boardsRadioBtnWrapper.innerHTML = "";
   data.boards.forEach((board) => {
     const btnWrapper = document.createElement("div");
     btnWrapper.classList.add("button-group");
@@ -114,34 +121,46 @@ function updateRadioBtns() {
   });
   const firstRadio = boardsRadioBtnWrapper.querySelector("input[name='board']");
   if (firstRadio) firstRadio.checked = true;
-  console.log(firstRadio);
+
 }
 
 function showOverlay() {
   const overlayEl = document.querySelectorAll(".overlay");
+  console.log("Overlay elements found:", overlayEl.length);
+  if (overlayEl.length === 0) {
+    console.error("No elements with class 'overlay' found!");
+    return;
+ }
   overlayEl.forEach((el) => {
-    if (el.classList.contains("active")) {
-      el.classList.remove("active");
-    } else {
-      el.classList.add("active");
-    }
+    el.classList.toggle("active"); // Toggle active class
+    console.log("Class added:", el.classList.contains("active"));
   });
 }
 
-function createTask(name, des, board) {
-  const newTask = document.createElement("div");
-  newTask.classList.add("task-card");
-  newTask.setAttribute("draggable", "true");
-  newTask.innerHTML = `
-    <div class="task-card-title">
-        <h4>${name}</h4>
-        <span>${getCurrentTime()}</span>
-    </div>
-    <p>${des}</p>`;
 
-  boardCardsBox.forEach((box) => {
-    box.appendChild(newTask);
-  });
+function createTask(name, des, boardName) {
+  if (!boardName) {
+    console.error("Board name is undefined!");
+    alert("Please select a board before adding a task.");
+    return;
+  }
+
+  const currBoard = data.boards.find(board => board.name.toLowerCase() === boardName.toLowerCase())
+
+  if(!currBoard){
+    console.error("Board not found!");
+    alert("Invalid board selected.");
+    return;
+  }
+
+  const newTask = {
+    name,
+    des,
+    time: getCurrentTime(),
+  };
+  currBoard.tasks.push(newTask)
+  boardsBox.innerHTML = "";
+  renderBoard();
 }
 
 function getCurrentTime() {
